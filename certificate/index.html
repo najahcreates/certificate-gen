@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Official Certificate</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap');
+
+  body {
+    background: #f5f5f5;
+    font-family: 'Libre Baskerville', serif;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+  }
+
+  .certificate-wrapper {
+    max-width: 900px;
+    width: 100%;
+  }
+
+  .certificate {
+    background: white;
+    border: 15px solid #2c3e50;
+    padding: 40px 60px;
+    box-shadow: 0 0 25px rgba(44, 62, 80, 0.3);
+    text-align: center;
+    color: #2c3e50;
+    position: relative;
+  }
+
+  .certificate::before {
+    content: "";
+    position: absolute;
+    top: 15px; left: 15px; right: 15px; bottom: 15px;
+    border: 3px solid #2980b9;
+    pointer-events: none;
+  }
+
+  h1 {
+    font-size: 36px;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+    font-weight: normal;
+  }
+
+  p {
+    font-size: 22px;
+    line-height: 1.6;
+    margin: 15px 0;
+  }
+
+  .recipient {
+    font-weight: 700;
+    font-size: 28px;
+    margin-top: 10px;
+    letter-spacing: 1px;
+  }
+
+  .highlight {
+    font-weight: 700;
+    color: #2980b9;
+  }
+
+  .footer {
+    margin-top: 50px;
+    font-size: 18px;
+    font-style: italic;
+    color: #7f8c8d;
+  }
+
+  /* Buttons */
+  .btn-container {
+    margin: 30px 0;
+    text-align: center;
+  }
+  button {
+    cursor: pointer;
+    background-color: #2980b9;
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    margin: 0 10px;
+    font-size: 18px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: #1f6391;
+  }
+</style>
+</head>
+<body>
+
+<div class="certificate-wrapper">
+  <div class="certificate" id="certificate">
+    <h1>Certificate of Achievement</h1>
+    <p>This is to certify that <span class="highlight">Mr./Ms. <span id="name">[Name]</span></span> has been awarded</p>
+    <p>the <span class="highlight" id="prize">[Prize]</span> position with <span class="highlight" id="grade">[Grade]</span> grade</p>
+    <p>in <span class="highlight" id="program">[Program]</span> in <span class="highlight">KAFAN'24</span></p>
+    <p>DHIU PG Arts Fest organized by Darul Huda Students' Union (DSU)</p>
+    <p>on October 01 to 06, 2024 at Darul Huda Islamic University</p>
+    <p class="footer">_________________________<br>Authorized Signature</p>
+  </div>
+
+  <div class="btn-container">
+    <button onclick="window.print()">Print Certificate</button>
+    <button onclick="downloadPDF()">Download PDF</button>
+  </div>
+</div>
+
+<!-- html2pdf library from CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<script>
+  function getQueryParams() {
+    const params = new URLSearchParams(window.location.search);
+    return {
+      name: params.get('name') || '[Name]',
+      program: params.get('program') || '[Program]',
+      grade: params.get('Grade') || '[Grade]',
+      prize: params.get('Prize') || '[Prize]'
+    };
+  }
+
+  const { name, program, grade, prize } = getQueryParams();
+
+  document.getElementById('name').textContent = decodeURIComponent(name);
+  document.getElementById('program').textContent = decodeURIComponent(program);
+  document.getElementById('grade').textContent = decodeURIComponent(grade);
+  document.getElementById('prize').textContent = decodeURIComponent(prize);
+
+  function downloadPDF() {
+    const element = document.getElementById('certificate');
+
+    const opt = {
+      margin:       0.4,
+      filename:     `Certificate_${decodeURIComponent(name).replace(/\s+/g, '_')}.pdf`,
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 2 },
+      jsPDF:        { unit: 'in', format: 'a4', orientation: 'landscape' }
+    };
+
+    html2pdf().set(opt).from(element).save();
+  }
+</script>
+
+</body>
+</html>
