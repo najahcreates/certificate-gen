@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Certificate Link Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 600px;
+    }
+    h2 {
+      margin-top: 0;
+    }
+    label {
+      display: block;
+      margin: 15px 0 5px;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      font-size: 16px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px 20px;
+      background: #007bff;
+      border: none;
+      color: white;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    #output {
+      margin-top: 20px;
+      background: #eef;
+      padding: 15px;
+      border-radius: 5px;
+      word-break: break-word;
+    }
+    input[readonly] {
+      background: #e9e9e9;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Certificate Link Generator</h2>
+  
+  <label for="name">Name:</label>
+  <input type="text" id="name" placeholder="Enter name" />
+
+  <label for="program">Program:</label>
+  <input type="text" id="program" placeholder="Enter program" />
+
+  <label for="grade">Grade:</label>
+  <select id="grade">
+    <option value="">-- Select Grade --</option>
+    <option value="A">A</option>
+    <option value="B">B</option>
+    <option value="No Grade">No Grade</option>
+  </select>
+
+  <label for="prize">Prize:</label>
+  <select id="prize">
+    <option value="">-- Select Prize --</option>
+    <option value="1st">1st</option>
+    <option value="2nd">2nd</option>
+    <option value="3rd">3rd</option>
+    <option value="None">None</option>
+  </select>
+
+  <button onclick="generateLink()">Generate Link</button>
+
+  <div id="output"></div>
+</div>
+
+<script>
+  function generateLink() {
+    const baseUrl = "https://festcertificate.com/";
+    const name = encodeURIComponent(document.getElementById("name").value.trim());
+    const program = encodeURIComponent(document.getElementById("program").value.trim());
+    let grade = document.getElementById("grade").value;
+    let prize = document.getElementById("prize").value;
+
+    // Handle "None" prize: treat as empty string (omit in URL)
+    if (prize === "None") prize = "";
+
+    if (!name || !program || !grade) {
+      document.getElementById("output").innerHTML = "<span style='color: red;'>Please fill out Name, Program, and Grade.</span>";
+      return;
+    }
+
+    // Build URL parts
+    let url = `${baseUrl}?name=${name}&program=${program}&Grade=${encodeURIComponent(grade)}`;
+    if(prize) {
+      url += `&Prize=${encodeURIComponent(prize)}`;
+    }
+
+    document.getElementById("output").innerHTML = `
+      <strong>Generated Link:</strong><br>
+      <input type="text" value="${url}" readonly onclick="this.select()" />
+      <br><br>
+      <a href="${url}" target="_blank">Open Certificate</a>
+    `;
+  }
+</script>
+
+</body>
+</html>
