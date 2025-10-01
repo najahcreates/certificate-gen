@@ -2,76 +2,190 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Certificate Link Generator</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+    /* Reset and base */
+    * {
+      box-sizing: border-box;
+    }
     body {
-      font-family: Arial, sans-serif;
-      padding: 40px;
-      background: #f4f4f4;
+      margin: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+        Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #333;
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      height: 100vh;
+      min-height: 100vh;
+      padding: 40px 20px;
     }
     .container {
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      background: #fff;
+      border-radius: 12px;
+      padding: 40px 35px;
+      max-width: 480px;
       width: 100%;
-      max-width: 600px;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+      transition: box-shadow 0.3s ease;
     }
+    .container:hover {
+      box-shadow: 0 16px 40px rgba(0,0,0,0.2);
+    }
+
     h2 {
-      margin-top: 0;
+      font-weight: 600;
+      font-size: 28px;
+      margin-bottom: 30px;
+      color: #4a3c8c;
+      text-align: center;
     }
+
     label {
       display: block;
-      margin: 15px 0 5px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #4a3c8c;
+      user-select: none;
     }
-    input, select {
+
+    input[type="text"],
+    select {
       width: 100%;
-      padding: 8px;
+      padding: 12px 15px;
       font-size: 16px;
+      border: 2px solid #dcdcdc;
+      border-radius: 8px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      outline-offset: 2px;
     }
-    button {
-      margin-top: 20px;
-      padding: 12px 20px;
-      background: #007bff;
-      border: none;
-      color: white;
-      font-size: 16px;
-      border-radius: 5px;
-      cursor: pointer;
+
+    input[type="text"]:focus,
+    select:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 8px rgba(102, 126, 234, 0.5);
     }
-    button:hover {
-      background: #0056b3;
-    }
-    #output {
-      margin-top: 20px;
-      background: #eef;
-      padding: 15px;
-      border-radius: 5px;
-      word-break: break-word;
-    }
+
     input[readonly] {
-      background: #e9e9e9;
+      background-color: #f8f8f8;
+      border-color: #b3b3b3;
+      cursor: pointer;
+      user-select: all;
+    }
+
+    button {
+      margin-top: 28px;
+      width: 100%;
+      padding: 14px 0;
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+      background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(102, 126, 234, 0.6);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(90deg, #5a6cda 0%, #613d96 100%);
+      box-shadow: 0 8px 20px rgba(91, 110, 218, 0.8);
+    }
+
+    #output {
+      margin-top: 28px;
+      background: #eef2ff;
+      padding: 20px 25px;
+      border-radius: 10px;
+      font-size: 16px;
+      color: #333;
+      word-break: break-word;
+      user-select: none;
+      box-shadow: inset 0 0 10px #d3d8ff;
+      min-height: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    #output input[type="text"] {
+      user-select: all;
+      margin-top: 10px;
+      padding: 10px 14px;
+      font-size: 15px;
+      border-radius: 8px;
+      border: 1.8px solid #a0a7ff;
+      background: #f3f5ff;
+      cursor: pointer;
+      transition: background-color 0.25s ease;
+    }
+
+    #output input[type="text"]:hover {
+      background-color: #e1e6ff;
+    }
+
+    /* Big highlighted button for open certificate link */
+    #output a.button-link {
+      display: block;
+      margin-top: 18px;
+      width: 100%;
+      text-align: center;
+      padding: 14px 0;
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+      background: #6f42c1; /* Purple accent */
+      border-radius: 10px;
+      text-decoration: none;
+      box-shadow: 0 6px 12px rgba(111, 66, 193, 0.6);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+    }
+
+    #output a.button-link:hover {
+      background: #5929a8;
+      box-shadow: 0 8px 20px rgba(89, 41, 168, 0.8);
+    }
+
+    #output a.button-link:focus {
+      outline: 3px solid #a288e3;
+      outline-offset: 2px;
+    }
+
+    /* Error text style */
+    .error {
+      color: #d14343;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    @media (max-width: 520px) {
+      .container {
+        padding: 30px 20px;
+      }
+      h2 {
+        font-size: 24px;
+      }
     }
   </style>
 </head>
 <body>
 
-<div class="container">
-  <h2>Certificate Link Generator</h2>
+<div class="container" role="main" aria-labelledby="page-title">
+  <h2 id="page-title">Certificate Link Generator</h2>
   
   <label for="name">Name:</label>
-  <input type="text" id="name" placeholder="Enter name" />
+  <input type="text" id="name" placeholder="Enter name" autocomplete="off" />
 
   <label for="program">Program:</label>
-  <input type="text" id="program" placeholder="Enter program" />
+  <input type="text" id="program" placeholder="Enter program" autocomplete="off" />
 
   <label for="grade">Grade:</label>
-  <select id="grade">
+  <select id="grade" aria-required="true">
     <option value="">-- Select Grade --</option>
     <option value="A">A</option>
     <option value="B">B</option>
@@ -79,7 +193,7 @@
   </select>
 
   <label for="prize">Prize:</label>
-  <select id="prize">
+  <select id="prize" aria-required="false">
     <option value="">-- Select Prize --</option>
     <option value="1st">1st</option>
     <option value="2nd">2nd</option>
@@ -87,9 +201,9 @@
     <option value="None">None</option>
   </select>
 
-  <button onclick="generateLink()">Generate Link</button>
+  <button type="button" onclick="generateLink()">Generate Link</button>
 
-  <div id="output"></div>
+  <div id="output" aria-live="polite" aria-atomic="true"></div>
 </div>
 
 <script>
@@ -100,25 +214,22 @@
     let grade = document.getElementById("grade").value;
     let prize = document.getElementById("prize").value;
 
-    // Handle "None" prize: treat as empty string (omit in URL)
-    if (prize === "None") prize = "";
+    if (prize === "None") prize = "No Prize";
 
     if (!name || !program || !grade) {
-      document.getElementById("output").innerHTML = "<span style='color: red;'>Please fill out Name, Program, and Grade.</span>";
+      document.getElementById("output").innerHTML = `<span class="error">Please fill out Name, Program, and Grade.</span>`;
       return;
     }
 
-    // Build URL parts
     let url = `${baseUrl}?name=${name}&program=${program}&Grade=${encodeURIComponent(grade)}`;
     if(prize) {
       url += `&Prize=${encodeURIComponent(prize)}`;
     }
 
     document.getElementById("output").innerHTML = `
-      <strong>Generated Link:</strong><br>
-      <input type="text" value="${url}" readonly onclick="this.select()" />
-      <br><br>
-      <a href="${url}" target="_blank">Open Certificate</a>
+      <strong>Generated Link:</strong>
+      <input type="text" value="${url}" readonly onclick="this.select()" aria-label="Generated certificate link" />
+      <a href="${url}" target="_blank" rel="noopener noreferrer" class="button-link" role="button" tabindex="0">Open Certificate</a>
     `;
   }
 </script>
