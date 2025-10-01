@@ -105,6 +105,30 @@
   button:hover {
     background-color: #1f6391;
   }
+
+  /* Print styles */
+  @media print {
+    body {
+      background: none;
+      padding: 0;
+      margin: 0;
+    }
+    .certificate-wrapper {
+      max-width: none;
+      box-shadow: none;
+    }
+    .btn-container {
+      display: none;
+    }
+    .certificate {
+      box-shadow: none;
+      border: none;
+      background-image: url('https://z-cdn-media.chatglm.cn/files/87d4fc7e-1655-4adb-aa8f-4f474eb29877_certificate.jpg?auth_key=1790684808-550c44fc75e841d48cf7165578a25752-0-811d414dad7c7e69475d3514d58175b1') !important;
+      background-size: contain !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
 </style>
 </head>
 <body>
@@ -139,8 +163,9 @@
     return {
       name: params.get('name') || '[Name]',
       program: params.get('program') || '[Program]',
-      grade: params.get('grade') || '[Grade]',
-      prize: params.get('prize') || '[Prize]'
+      // Fix: Use correct case for parameters (Grade and Prize with capital first letter)
+      grade: params.get('Grade') || '[Grade]',
+      prize: params.get('Prize') || '[Prize]'
     };
   }
 
