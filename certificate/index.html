@@ -53,21 +53,19 @@
 
   .certificate-text {
     font-size: 22px;
-    line-height: 1.8;
     color: #2c3e50;
     margin: 0 0 0 0;
   }
 
   .highlight {
     font-weight: 700;
-    color: #2980b9;
+    color: #2c3e50;
   }
 
   .event-details {
     font-size: 22px;
     color: #34495e;
     margin: 5px 0;
-    line-height: 1.6;
   }
 
   .signature-area {
@@ -139,24 +137,19 @@
       <div class="text-container">
         <p class="certificate-text">
           This is to certify that Mr. <span id="name" class="highlight">[Name]</span> has been awarded 
-          the <span id="prize" class="highlight">[Prize]</span> position with <span id="grade" class="highlight">[Grade]</span> grade 
+          <span id="prize" class="highlight">[Prize]</span> position with <span id="grade" class="highlight">[Grade]</span> grade 
           in <span id="program" class="highlight">[Program]</span> in Fansat'25
         </p>
         <p class="event-details">DHIU UG Arts Fest organized by Al Huda Students' Association</p>
-        <p class="event-details">on September 01 to 06, 2025 at Darul Huda Islamic University</p>
+        <p class="event-details">on September 23 to 28, 2025 at Darul Huda Islamic University</p>
       </div>
     </div>
   </div>
 
   <div class="btn-container">
     <button onclick="window.print()">Print Certificate</button>
-    <button onclick="downloadPDF()">Download PDF</button>
   </div>
 </div>
-
-<!-- html2pdf library from CDN -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
 <script>
   function getQueryParams() {
     const params = new URLSearchParams(window.location.search);
@@ -175,20 +168,6 @@
   document.getElementById('program').textContent = decodeURIComponent(program);
   document.getElementById('grade').textContent = decodeURIComponent(grade);
   document.getElementById('prize').textContent = decodeURIComponent(prize);
-
-  function downloadPDF() {
-    const element = document.getElementById('certificate');
-
-    const opt = {
-      margin:       0.4,
-      filename:     `Certificate_${decodeURIComponent(name).replace(/\s+/g, '_')}.pdf`,
-      image:        { type: 'jpeg', quality: 0.98 },
-      html2canvas:  { scale: 2 },
-      jsPDF:        { unit: 'in', format: 'a4', orientation: 'landscape' }
-    };
-
-    html2pdf().set(opt).from(element).save();
-  }
 </script>
 
 </body>
