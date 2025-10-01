@@ -4,12 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Official Certificate</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap');
-
   body {
     background: #f5f5f5;
-    font-family: 'Libre Baskerville', serif;
+    font-family: 'DM Sans', sans-serif;
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -24,41 +23,39 @@
   }
 
   .certificate {
-    background: white;
-    border: 15px solid #2c3e50;
-    padding: 40px 60px;
-    box-shadow: 0 0 25px rgba(44, 62, 80, 0.3);
-    text-align: center;
-    color: #2c3e50;
     position: relative;
+    width: 100%;
+    padding-bottom: 70.7%; /* A4 aspect ratio (210/297) */
+    background: white url('https://z-cdn-media.chatglm.cn/files/87d4fc7e-1655-4adb-aa8f-4f474eb29877_certificate.jpg?auth_key=1790684808-550c44fc75e841d48cf7165578a25752-0-811d414dad7c7e69475d3514d58175b1') no-repeat center center;
+    background-size: contain;
+    box-shadow: 0 0 25px rgba(44, 62, 80, 0.3);
   }
 
-  .certificate::before {
-    content: "";
+  .certificate-content {
     position: absolute;
-    top: 15px; left: 15px; right: 15px; bottom: 15px;
-    border: 3px solid #2980b9;
-    pointer-events: none;
+    top: 140px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
-  h1 {
-    font-size: 36px;
-    margin-bottom: 30px;
-    letter-spacing: 2px;
-    font-weight: normal;
+  .text-container {
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
   }
 
-  p {
+  .certificate-text {
     font-size: 22px;
-    line-height: 1.6;
-    margin: 15px 0;
-  }
-
-  .recipient {
-    font-weight: 700;
-    font-size: 28px;
-    margin-top: 10px;
-    letter-spacing: 1px;
+    line-height: 1.8;
+    color: #2c3e50;
+    margin: 0 0 0 0;
   }
 
   .highlight {
@@ -66,11 +63,26 @@
     color: #2980b9;
   }
 
-  .footer {
-    margin-top: 50px;
+  .event-details {
+    font-size: 22px;
+    color: #34495e;
+    margin: 5px 0;
+    line-height: 1.6;
+  }
+
+  .signature-area {
+    position: absolute;
+    bottom: 12%;
+    left: 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  .signature-line {
     font-size: 18px;
-    font-style: italic;
     color: #7f8c8d;
+    font-style: italic;
+    margin: 5px 0;
   }
 
   /* Buttons */
@@ -88,6 +100,7 @@
     font-size: 18px;
     border-radius: 5px;
     transition: background-color 0.3s ease;
+    font-family: 'DM Sans', sans-serif;
   }
   button:hover {
     background-color: #1f6391;
@@ -98,12 +111,17 @@
 
 <div class="certificate-wrapper">
   <div class="certificate" id="certificate">
-    <h1>Certificate of Achievement</h1>
-    <p>This is to certify that <span class="highlight">Mr./Ms. <span id="name">[Name]</span></span> has been awarded</p>
-    <p>the <span class="highlight" id="prize">[Prize]</span> position with <span class="highlight" id="grade">[Grade]</span> grade</p>
-    <p>in <span class="highlight" id="program">[Program]</span> in <span class="highlight">Fansat 25</span></p>
-    <p>DHIU PG Arts Fest organized by Darul Huda Students' Union (DSU)</p>
-    <p>on October 01 to 06, 2024 at Darul Huda Islamic University</p>
+    <div class="certificate-content">
+      <div class="text-container">
+        <p class="certificate-text">
+          This is to certify that Mr. <span id="name" class="highlight">[Name]</span> has been awarded 
+          the <span id="prize" class="highlight">[Prize]</span> position with <span id="grade" class="highlight">[Grade]</span> grade 
+          in <span id="program" class="highlight">[Program]</span> in Fansat'25
+        </p>
+        <p class="event-details">DHIU UG Arts Fest organized by Al Huda Students' Association</p>
+        <p class="event-details">on September 01 to 06, 2025 at Darul Huda Islamic University</p>
+      </div>
+    </div>
   </div>
 
   <div class="btn-container">
@@ -121,8 +139,8 @@
     return {
       name: params.get('name') || '[Name]',
       program: params.get('program') || '[Program]',
-      grade: params.get('Grade') || '[Grade]',
-      prize: params.get('Prize') || '[Prize]'
+      grade: params.get('grade') || '[Grade]',
+      prize: params.get('prize') || '[Prize]'
     };
   }
 
